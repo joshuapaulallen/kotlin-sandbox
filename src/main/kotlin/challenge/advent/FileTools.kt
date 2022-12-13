@@ -12,7 +12,7 @@ class FileTools private constructor() {
             val fileAsString = reader.readText()
             reader.close()
 
-            return fileAsString;
+            return fileAsString.trim();
         }
     }
 }
