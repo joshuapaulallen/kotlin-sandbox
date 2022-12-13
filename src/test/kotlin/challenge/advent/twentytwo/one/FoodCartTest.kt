@@ -21,4 +21,14 @@ internal class FoodCartTest {
         System.out.println(FoodCartUtils.findBiggestFoodCart(foodCarts).calorieCount())
     }
 
+    @Test
+    fun partTwo() {
+        val inputGroups = ChallengeInputTools.parseResourceIntoGroups("/challenge/advent/2022/01/input-1a.txt");
+        val foodCarts = FoodCartUtils.parse(inputGroups).toList()
+        val foodCartsSorted = foodCarts.sortedByDescending { foodCart -> foodCart.calorieCount() }
+        System.out.println(
+            foodCartsSorted[0].calorieCount() + foodCartsSorted[1].calorieCount() + foodCartsSorted[2].calorieCount()
+        )
+    }
+
 }
