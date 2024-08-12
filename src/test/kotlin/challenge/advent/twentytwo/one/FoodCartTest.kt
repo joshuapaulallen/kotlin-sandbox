@@ -2,7 +2,6 @@ package challenge.advent.twentytwo.one
 
 import challenge.advent.ChallengeInputTools
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class FoodCartTest {
