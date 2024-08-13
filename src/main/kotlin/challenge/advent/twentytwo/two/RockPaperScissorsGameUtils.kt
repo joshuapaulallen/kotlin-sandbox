@@ -17,6 +17,18 @@ class RockPaperScissorsGameUtils private constructor() {
             return RockPaperScissorsGame(toChoice(items[0]), toChoice(items[1]))
         }
 
+        fun parseWithStrategy(inputs: List<String>): Set<RockPaperScissorsGame> {
+            return inputs.stream()
+                .map { i -> parseWithStrategy(i) }
+                .collect(Collectors.toSet());
+        }
+
+        fun parseWithStrategy(input: String): RockPaperScissorsGame {
+            val items = input.split(Pattern.compile("\\s+"))
+            val opponentChoice = toChoice(items[0])
+            return RockPaperScissorsGame(opponentChoice, toStrategicChoice(opponentChoice, items[1]))
+        }
+
         fun toChoice(input: String): RockPaperScissorsGame.Choice {
             if (setOf("A", "X").contains(input)) {
                 return RockPaperScissorsGame.Choice.ROCK;
@@ -29,6 +41,33 @@ class RockPaperScissorsGameUtils private constructor() {
             }
 
             throw IllegalArgumentException("Unrecognized input: $input")
+        }
+
+        fun toStrategicChoice(opponentChoice: RockPaperScissorsGame.Choice, strategy: String): RockPaperScissorsGame.Choice {
+            // need to lose
+            if (strategy == "X") {
+                return when (opponentChoice) {
+                    RockPaperScissorsGame.Choice.ROCK -> RockPaperScissorsGame.Choice.SCISSORS
+                    RockPaperScissorsGame.Choice.PAPER -> RockPaperScissorsGame.Choice.ROCK
+                    RockPaperScissorsGame.Choice.SCISSORS -> RockPaperScissorsGame.Choice.PAPER
+                }
+            }
+
+            // need to draw
+            if (strategy == "Y") {
+                return opponentChoice
+            }
+
+            // need to win
+            if (strategy == "Z") {
+                return when (opponentChoice) {
+                    RockPaperScissorsGame.Choice.ROCK -> RockPaperScissorsGame.Choice.PAPER
+                    RockPaperScissorsGame.Choice.PAPER -> RockPaperScissorsGame.Choice.SCISSORS
+                    RockPaperScissorsGame.Choice.SCISSORS -> RockPaperScissorsGame.Choice.ROCK
+                }
+            }
+
+            throw IllegalArgumentException("Unrecognized strategy: $strategy")
         }
 
     }

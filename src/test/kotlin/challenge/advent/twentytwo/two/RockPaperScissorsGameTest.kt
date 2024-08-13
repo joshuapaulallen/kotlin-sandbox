@@ -27,9 +27,26 @@ internal class RockPaperScissorsGameTest {
     }
 
     @Test
+    fun testStrategicWithParse() {
+        assertEquals(
+            12,
+            RockPaperScissorsGameUtils.parseWithStrategy(listOf("A Y", "B X", "C Z")).stream()
+                .collect(Collectors.summingInt { c -> c.playerTwoScore() })
+        )
+    }
+
+    @Test
     fun run() {
         val file = FileTools.readEntireFileFromResource("/challenge/advent/2022/02/input-2a.txt")
         val result = RockPaperScissorsGameUtils.parse(file.split("\n")).stream()
+            .collect(Collectors.summingInt { c -> c.playerTwoScore() })
+        System.out.println(result)
+    }
+
+    @Test
+    fun runStrategic() {
+        val file = FileTools.readEntireFileFromResource("/challenge/advent/2022/02/input-2a.txt")
+        val result = RockPaperScissorsGameUtils.parseWithStrategy(file.split("\n")).stream()
             .collect(Collectors.summingInt { c -> c.playerTwoScore() })
         System.out.println(result)
     }
