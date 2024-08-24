@@ -1,6 +1,7 @@
 package challenge.advent.twentytwo.three
 
 import challenge.advent.ChallengeInputTools
+import challenge.advent.ListTools
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -54,6 +55,25 @@ internal class RucksackTest {
         val rucksacks = ChallengeInputTools.parseResource("/challenge/advent/2022/03/input-3a.txt")
             .map { s -> Rucksack.parse(s, 2) }
         println(rucksacks.sumOf { r -> r.findCommonItems().sumOf { i -> i.priority() } })
+    }
+
+    @Test
+    fun rucksackGroupsCommonItemsSmall() {
+        val rucksacks = ChallengeInputTools.parseResource("/challenge/advent/2022/03/input-3b-small.txt")
+            .map { s -> Rucksack.parse(s, 2) }
+        val rucksackGroups = ListTools.split(rucksacks, 3).map { rucksackList -> RucksackGroup(rucksackList)}
+        assertEquals(
+            70,
+            rucksackGroups.sumOf { group -> group.findCommonItems().sumOf { i -> i.priority() } }
+        )
+    }
+
+    @Test
+    fun rucksackGroupsCommonItems() {
+        val rucksacks = ChallengeInputTools.parseResource("/challenge/advent/2022/03/input-3b.txt")
+            .map { s -> Rucksack.parse(s, 2) }
+        val rucksackGroups = ListTools.split(rucksacks, 3).map { rucksackList -> RucksackGroup(rucksackList)}
+        println(rucksackGroups.sumOf { group -> group.findCommonItems().sumOf { i -> i.priority() } })
     }
 
 }

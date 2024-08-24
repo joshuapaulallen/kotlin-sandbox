@@ -13,6 +13,10 @@ class Rucksack(val compartments: List<Compartment>) {
 
     }
 
+    fun items(): List<Item> {
+        return compartments.map { compartment -> compartment.items }.flatten()
+    }
+
     fun findCommonItems(): List<Item> {
         if (compartments.isEmpty()) return emptyList()
         if (compartments.size == 1) return compartments[0].items
@@ -21,6 +25,8 @@ class Rucksack(val compartments: List<Compartment>) {
             .fold(compartments[0].items.toSet()) { acc, compartmentItems -> acc.intersect(compartmentItems.toSet()) }
             .toList()
     }
+
+    override fun toString(): String = compartments.joinToString(":") { c -> c.toString() }
 
     class Compartment(val items: List<Item>) {
 
